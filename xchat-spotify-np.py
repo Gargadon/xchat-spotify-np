@@ -7,7 +7,7 @@
 """
 
 __module_name__         = "xchat-spotify-np"
-__module_version__      = "1.0"
+__module_version__      = "2.0"
 __module_description__  = "Now playing script for Spotify for XChat on Linux"
 
 import xchat
@@ -45,19 +45,19 @@ def on_nowplaying(word, word_eol, userdata):
 
 
     # Get track information from DBus dictionary
-    album       = trackinfo.get("xesam:album")
-    title       = trackinfo.get("xesam:title")
-    trackNumber = str(trackinfo.get("xesam:trackNumber"))
-    discNumber  = str(trackinfo.get("xesam:discNumber"))
-    trackid     = str(trackinfo.get("xesam:trackid"))
-    length      = trackinfo.get("xesam:length")
-    artUrl      = trackinfo.get("xesam:artUrl")
-    url         = trackinfo.get("xesam:url")
+    album       = unicode(trackinfo.get("xesam:album")).encode('utf-8')
+    title       = unicode(trackinfo.get("xesam:title")).encode('utf-8')
+    trackNumber = str(unicode(trackinfo.get("xesam:trackNumber")).encode('utf-8'))
+    discNumber  = str(unicode(trackinfo.get("xesam:discNumber")).encode('utf-8'))
+    trackid     = str(unicode(trackinfo.get("xesam:trackid")).encode('utf-8'))
+    length      = unicode(trackinfo.get("xesam:length")).encode('utf-8')
+    artUrl      = unicode(trackinfo.get("xesam:artUrl")).encode('utf-8')
+    url         = unicode(trackinfo.get("xesam:url")).encode('utf-8')
 
     # The artist list is provided as an array. Combine all artists to a single string.
     artist = str(", ".join(trackinfo.get("xesam:artist"))).strip()
 
-    npmsg = "Now Playing: %s - %s [%s] (%s)" % (title, artist, album, url)
+    npmsg = "Now Playing: %s - %s [%s] (%s)" % (artist, title, album, url)
     xchat.command("msg %s %s" % (channel, npmsg))
     return xchat.EAT_ALL
-xchat.hook_command("nowplaying", on_nowplaying, help="/nowplaying - Announce currently playing track in Spotify")
+xchat.hook_command("spotify", on_nowplaying, help="/spotify - Announce currently playing track in Spotify")
