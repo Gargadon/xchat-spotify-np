@@ -3,6 +3,7 @@
     Requires Python, Xchat, Spotify and DBus
 
     Erik Nosar
+    David Kantun
     Script released under Public Domain
 """
 
