@@ -39,28 +39,28 @@ dbus.Dictionary(
 def on_nowplaying(word, word_eol, userdata):
     bus = dbus.SessionBus()
     if bus.name_has_owner('org.mpris.MediaPlayer2.spotify'):
-	   spotify = bus.get_object('org.mpris.MediaPlayer2.spotify','/org/mpris/MediaPlayer2')
+          spotify = bus.get_object('org.mpris.MediaPlayer2.spotify','/org/mpris/MediaPlayer2')
            # Get current channel and get latest track from Spotify
-           context = xchat.get_context()
-           channel = context.get_info("channel")
-	   metadatas = dbus.Interface(spotify,'org.freedesktop.DBus.Properties')
-	   trackinfo = metadatas.Get('org.mpris.MediaPlayer2.Player','Metadata')
-           # Get track information from DBus dictionary
-           album       = unicode(trackinfo.get("xesam:album")).encode('utf-8')
-           title       = unicode(trackinfo.get("xesam:title")).encode('utf-8')	
-           trackNumber = str(unicode(trackinfo.get("xesam:trackNumber")).encode('utf-8'))
-	   discNumber  = str(unicode(trackinfo.get("xesam:discNumber")).encode('utf-8'))
-	   trackid     = str(unicode(trackinfo.get("xesam:trackid")).encode('utf-8'))
-	   length      = unicode(trackinfo.get("xesam:length")).encode('utf-8')
-	   artUrl      = unicode(trackinfo.get("xesam:artUrl")).encode('utf-8')
-	   url         = unicode(trackinfo.get("xesam:url")).encode('utf-8')
+          context = xchat.get_context()
+          channel = context.get_info("channel")
+          metadatas = dbus.Interface(spotify,'org.freedesktop.DBus.Properties')
+          trackinfo = metadatas.Get('org.mpris.MediaPlayer2.Player','Metadata')
+          # Get track information from DBus dictionary
+          album       = unicode(trackinfo.get("xesam:album")).encode('utf-8')
+          title       = unicode(trackinfo.get("xesam:title")).encode('utf-8')       
+          trackNumber = str(unicode(trackinfo.get("xesam:trackNumber")).encode('utf-8'))
+          discNumber  = str(unicode(trackinfo.get("xesam:discNumber")).encode('utf-8'))
+          trackid     = str(unicode(trackinfo.get("xesam:trackid")).encode('utf-8'))
+          length      = unicode(trackinfo.get("xesam:length")).encode('utf-8')
+          artUrl      = unicode(trackinfo.get("xesam:artUrl")).encode('utf-8')
+          url         = unicode(trackinfo.get("xesam:url")).encode('utf-8')
     # The artist list is provided as an array. Combine all artists to a single string.
-	   artist = str(unicode(", ".join(trackinfo.get("xesam:artist"))).encode('utf-8')).strip()
-	   npmsg = "Now playing on 02Spotify: %s - %s [%s] (%s)" % (artist, title, album, url)
-	   xchat.command("msg %s %s" % (channel, npmsg))
-	   return xchat.EAT_ALL
+          artist = str(unicode(", ".join(trackinfo.get("xesam:artist"))).encode('utf-8')).strip()
+          npmsg = "Now playing on 02Spotify: %s - %s [%s] (%s)" % (artist, title, album, url)
+          xchat.command("msg %s %s" % (channel, npmsg))
+          return xchat.EAT_ALL
     else:
-	   return xchat.EAT_ALL    
+          return xchat.EAT_ALL    
     
 xchat.hook_command("spotify", on_nowplaying)
 xchat.prnt("/spotify - Announce currently playing track in Spotify")
