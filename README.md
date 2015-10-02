@@ -12,4 +12,4 @@ Go into your channel of choice and type: /spotify
 To make this autoload, copy the script into ~/.xchat2
 
 It should echo the following into the channel:
-> Now playing on Spotify: ABBA - S.O.S. \[The Essential Collection]\ (https://open.spotify.com/track/3Nr0vHVNthUXnn2VUAJGbo)
+> Now playing on Spotify: ABBA - S.O.S. \[The Essential Collection\] (https://open.spotify.com/track/3Nr0vHVNthUXnn2VUAJGbo)
