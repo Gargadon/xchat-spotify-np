@@ -8,7 +8,7 @@
 """
 
 __module_name__         = "xchat-spotify-np"
-__module_version__      = "2.1"
+__module_version__      = "2.2"
 __module_description__  = "Now playing script for Spotify for XChat on Linux"
 
 import xchat
@@ -43,7 +43,8 @@ def on_nowplaying(word, word_eol, userdata):
            # Get current channel and get latest track from Spotify
            context = xchat.get_context()
            channel = context.get_info("channel")
-	   trackinfo = spotify.Get("org.mpris.MediaPlayer2.Player","Metadata")
+	   metadatas = dbus.Interface(spotify,'org.freedesktop.DBus.Properties')
+	   trackinfo = metadatas.Get('org.mpris.MediaPlayer2.Player','Metadata')
            # Get track information from DBus dictionary
            album       = unicode(trackinfo.get("xesam:album")).encode('utf-8')
            title       = unicode(trackinfo.get("xesam:title")).encode('utf-8')	
@@ -55,7 +56,7 @@ def on_nowplaying(word, word_eol, userdata):
 	   url         = unicode(trackinfo.get("xesam:url")).encode('utf-8')
     # The artist list is provided as an array. Combine all artists to a single string.
 	   artist = str(unicode(", ".join(trackinfo.get("xesam:artist"))).encode('utf-8')).strip()
-	   npmsg = "Now Playing: %s - %s [%s] (%s)" % (artist, title, album, url)
+	   npmsg = "Now playing on 02Spotify: %s - %s [%s] (%s)" % (artist, title, album, url)
 	   xchat.command("msg %s %s" % (channel, npmsg))
 	   return xchat.EAT_ALL
     else:
